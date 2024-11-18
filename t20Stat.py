@@ -3,6 +3,10 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -11,12 +15,21 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 
 page_url = 'https://www.iplt20.com/stats/2023'
 #print(page_url)
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-#driver = webdriver.Chrome(options=chrome_options)
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run in headless mode
+chrome_options.add_argument("--no-sandbox")  # Required for some environments
+chrome_options.add_argument("--disable-dev-shm-usage")  # Prevent resource issues
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 driver.get(page_url)
+
+
+
+
+
+
+
+
 
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 
